@@ -9,6 +9,22 @@ import Paginator from './components/paginator';
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
 
+//container styled here using styled-component
+
+const Container = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0 auto;
+`;
+
+const CardDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+`;
+
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   
@@ -68,12 +84,33 @@ const App = () => {
   const currentPage = currentPage => {
     return people.slice(currentPage - 1, currentPage + 1);
   };
-
-  return (
-    <div className="App">
-      <h1 className="Header">React Wars</h1>
-    </div>
+//return items organized here
+return (
+  <Container className="App">
+   <h1 className="Header">React Wars</h1>
+  <Searchbar
+    activateSearch={activateSearch}
+    setSearch={setSearch}
+    setGender={setGender}
+  />
+  <CardDiv>
+    {people !== [] ? (
+     currentPage(page).map((person, i) => <CharCard key={i} {...person} />)
+    ) : (
+     <p>loading</p>
+    )}
+  </CardDiv>
+    {people !== [] ? (
+   <Paginator
+     handlePageChange={handlePageChange}
+     page={page}
+     data={data}
+   />
+   ) : (
+   <p>loading</p>
+  )}
+  </Container>
   );
-}
+  };
 
 export default App;
